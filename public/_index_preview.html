@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>æ: Ash</title>
+
+		<!--stylesheets-->
+		<link rel="stylesheet" href="bootstrap.min.css">
+		
+		<link rel="stylesheet" href="animate.css">
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="flat-ui.min.css">
+		
+		<!--fonts-->
+		<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css">
+	</head>
+	
+	</body>
+		<form action = "">
+			<input id="m" autocomplete="off" class="form-control" /><button id="send" class="btn btn-embossed btn-primary">Send</button>
+		</form>
+		
+		<div id="messages-container" class="tlt">
+			<ul id="messages" class="texts"></ul>
+		</div>
+		
+		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="jquery.lettering.js"></script>
+		<script src="jquery.textillate.js"></script>
+		
+		<script>
+			var socket = io();
+			
+			$("form").submit(function(){
+				socket.emit("chat message", $("#m").val());
+				$("#m").val("");
+				return false;
+			});
+			socket.on("chat message", function(msg){
+				$("#messages").prepend($("<li data-in-effect='fadeIn' data-in-sync='true'; class='message'>").text(msg));
+				$(".message").textillate();
+			});
+		</script>
+	</body>
+</html>
